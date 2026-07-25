@@ -1,0 +1,48 @@
+county,lat,lon,source
+Mombasa,-4.0435,39.6682,approx_county_centre
+Kwale,-4.1737,39.4521,approx_county_centre
+Kilifi,-3.5107,39.9093,approx_county_centre
+Tana River,-1.5000,39.9000,approx_county_centre
+Lamu,-2.2717,40.9020,approx_county_centre
+Taita Taveta,-3.3167,38.4833,approx_county_centre
+Garissa,-0.4536,39.6461,approx_county_centre
+Wajir,1.7471,40.0573,approx_county_centre
+Mandera,3.9366,41.8670,approx_county_centre
+Marsabit,2.3284,37.9899,approx_county_centre
+Isiolo,0.3546,37.5822,approx_county_centre
+Meru,0.0500,37.6500,approx_county_centre
+Tharaka Nithi,-0.3000,37.9000,approx_county_centre
+Embu,-0.5310,37.4575,approx_county_centre
+Kitui,-1.3667,38.0106,approx_county_centre
+Machakos,-1.5177,37.2634,approx_county_centre
+Makueni,-1.8000,37.6167,approx_county_centre
+Nyandarua,-0.5333,36.5833,approx_county_centre
+Nyeri,-0.4169,36.9514,approx_county_centre
+Kirinyaga,-0.5000,37.2833,approx_county_centre
+Murang'a,-0.7167,37.1500,approx_county_centre
+Kiambu,-1.1714,36.8356,approx_county_centre
+Turkana,3.1167,35.6000,approx_county_centre
+West Pokot,1.4000,35.1167,approx_county_centre
+Samburu,1.2167,36.9333,approx_county_centre
+Trans Nzoia,1.0157,35.0062,approx_county_centre
+Uasin Gishu,0.5143,35.2698,approx_county_centre
+Elgeyo Marakwet,0.8000,35.5000,approx_county_centre
+Nandi,0.1833,35.1000,approx_county_centre
+Baringo,0.4667,35.9667,approx_county_centre
+Laikipia,0.2000,36.7833,approx_county_centre
+Nakuru,-0.3031,36.0800,approx_county_centre
+Narok,-1.0833,35.8667,approx_county_centre
+Kajiado,-1.8524,36.7769,approx_county_centre
+Kericho,-0.3689,35.2861,approx_county_centre
+Bomet,-0.7813,35.3416,approx_county_centre
+Kakamega,0.2827,34.7519,approx_county_centre
+Vihiga,0.0500,34.7167,approx_county_centre
+Bungoma,0.5635,34.5606,approx_county_centre
+Busia,0.4608,34.1115,approx_county_centre
+Siaya,0.0607,34.2881,approx_county_centre
+Kisumu,-0.0917,34.7680,approx_county_centre
+Homa Bay,-0.5273,34.4571,approx_county_centre
+Migori,-1.0634,34.4731,approx_county_centre
+Kisii,-0.6817,34.7680,approx_county_centre
+Nyamira,-0.5633,34.9358,approx_county_centre
+Nairobi,-1.2921,36.8219,approx_county_centre

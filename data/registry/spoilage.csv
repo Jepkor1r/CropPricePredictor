@@ -1,0 +1,9 @@
+cluster,pct_low,pct_high,source
+cereal,0.01,0.03,"Dry cereals/pulses - minimal transit loss (FAO post-harvest loss ranges)"
+root_tuber,0.05,0.10,"Bruising and rot in transit for potatoes/tubers"
+perishable_hort,0.10,0.25,"Tomatoes/cabbages - FAO & Tegemeo horticultural PHL estimates"
+leafy,0.15,0.30,"Leafy vegetables wilt fastest without cold chain"
+dairy,0.05,0.15,"Spoilage without cold chain between farm and collection point"
+livestock,0.02,0.05,"Weight loss / handling"
+fish,0.10,0.30,"Extreme perishability unless dried"
+_default,0.05,0.15,"Conservative fallback when the commodity cluster is unknown"

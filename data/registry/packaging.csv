@@ -1,0 +1,19 @@
+commodity,unit,kg_equivalent,source
+Dry Maize,Bag,90,Standard Kenyan cereal bag (AFA/NCPB convention)
+Dry Maize,Extended Bag,110,Field-observed over-filled bag; illegal but common
+Dry Maize,Tonne,1000,SI
+Red Irish potato,Bag,50,Crops Act 2013 / potato regulations mandate 50kg
+Red Irish potato,Extended Bag,110,The 'extended bag' the 50kg rule was meant to end
+White Irish Potatoes,Bag,50,Crops Act 2013 potato regulations
+Dry Onions,Net,15,Tegemeo TR31 onion marketing study
+Dry Onions,Bag,90,Bulk onion bag
+Tomatoes,Crate,64,Standard wooden tomato crate
+Tomatoes,Box,64,Alias of crate
+Cabbages,Bag,90,Cabbage sold in extended sacks
+Cabbages,Head,2,Mean head weight - indicative only
+Eggs,Tray,1.8,30 eggs at ~60g
+Beans Rosecoco,Bag,90,Standard pulse bag
+Green Grams,Bag,90,Standard pulse bag
+Wheat,Bag,90,Standard cereal bag
+Rice,Bag,50,Common rice bag
+Bananas,Bunch,20,Indicative - highly variable

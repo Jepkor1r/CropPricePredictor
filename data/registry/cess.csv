@@ -1,0 +1,12 @@
+county,kes_per_bag_low,kes_per_bag_high,bag_kg,effective_year,source
+Uasin Gishu,30,50,90,2024,"County Finance Act - produce cess per bag. INDICATIVE: verify against current Finance Act before production use."
+Trans Nzoia,30,50,90,2024,"County Finance Act - produce cess per bag. INDICATIVE: verify."
+Nyandarua,40,60,90,2024,"County Finance Act - horticultural produce cess. INDICATIVE: verify."
+Nakuru,40,60,90,2024,"County Finance Act. INDICATIVE: verify."
+Kajiado,30,50,90,2024,"County Finance Act. INDICATIVE: verify."
+Bungoma,30,50,90,2024,"County Finance Act. INDICATIVE: verify."
+Kirinyaga,40,60,90,2024,"County Finance Act. INDICATIVE: verify."
+Meru,40,60,90,2024,"County Finance Act. INDICATIVE: verify."
+Nairobi,20,50,90,2024,"Market entry / cess charges at Wakulima. INDICATIVE: verify."
+Mombasa,50,100,90,2024,"Kilifi/Mombasa corridor charges incl. Kongowea market levy. INDICATIVE: verify."
+_default,30,60,90,2024,"Fallback where the county Finance Act has not been digitised yet."

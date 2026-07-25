@@ -1,0 +1,33 @@
+commodity,cluster
+Dry Maize,cereal
+Wheat,cereal
+Red Sorghum,cereal
+White Sorghum,cereal
+Rice,cereal
+Green Grams,cereal
+Beans Rosecoco,cereal
+Mixed Beans,cereal
+Dry Onions,cereal
+Red Irish potato,root_tuber
+White Irish Potatoes,root_tuber
+Sweet potatoes,root_tuber
+Cassava Fresh,root_tuber
+Arrow Root,root_tuber
+Tomatoes,perishable_hort
+Cabbages,perishable_hort
+Kales/Sukuma Wiki,leafy
+Spinach,leafy
+Black nightshade (Managu/ Osuga),leafy
+Amaranthus (Terere),leafy
+Carrots,perishable_hort
+Water Melon,perishable_hort
+Avocado,perishable_hort
+Mangoes,perishable_hort
+Bananas,perishable_hort
+Cow Milk(At collection point),dairy
+Goat Milk (at collection point),dairy
+Eggs,livestock
+Meat Beef,livestock
+Tilapia,fish
+Omena,fish
+Nile Perch,fish

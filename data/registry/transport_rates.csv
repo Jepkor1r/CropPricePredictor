@@ -1,0 +1,4 @@
+vehicle_class,capacity_kg,kes_per_km_low,kes_per_km_high,ref_diesel_kes_per_litre,source
+pickup_3t,3000,60,90,165,"Hire rates for rural pickups; includes operator margin. Indicative - replace with pilot-county quotes."
+lorry_7t,7000,100,140,165,"Calibrated against Tegemeo TR31 (onions Naroosura-Nairobi 260km @ KES 37.12/15kg net) escalated by EPRA diesel to the 165 KES/l reference; cross-checked with CAK 2019 trucking cost study."
+lorry_15t,15000,160,220,165,"Long-haul arterial routes; CAK 2019 East Africa trucking study cost structure."

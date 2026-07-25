@@ -1,0 +1,183 @@
+county,market,lat,lon,verified,source
+Baringo,Eldama Ravine,0.0500,35.7167,false,town_centre_approx
+Baringo,Kabarnet,0.4919,35.7431,true,town_centre
+Baringo,Marigat,0.4667,35.9833,false,town_centre_approx
+Baringo,Mogotio,0.0333,35.9500,false,town_centre_approx
+Bomet,Bomet,-0.7813,35.3416,true,town_centre
+Bomet,Chebunyo,-1.0167,35.1167,false,approx
+Bomet,Kapkwen,-0.7500,35.3000,false,approx
+Bomet,Mogogosiek,-0.7333,35.1667,false,approx
+Bomet,Mulot,-0.9167,35.4333,false,approx
+Bomet,Ndanai,-0.9000,35.1667,false,approx
+Bungoma,Bungoma town,0.5635,34.5606,true,town_centre
+Bungoma,Chwele,0.7167,34.6167,false,town_centre_approx
+Bungoma,Kamukuywa,0.7833,34.7000,false,approx
+Bungoma,Kimilili town,0.7833,34.7167,false,town_centre_approx
+Busia,Amukura,0.5833,34.2833,false,approx
+Busia,Busia,0.4608,34.1115,true,town_centre
+Busia,Port Victoria,0.1000,33.9833,false,approx
+Elgeyo Marakwet,Kapcherop,1.0333,35.4667,false,approx
+Embu,Embu Town,-0.5310,37.4575,true,town_centre
+Embu,Kiritiri,-0.6833,37.6667,false,approx
+Embu,Makutano Embu,-0.5000,37.4500,false,approx
+Embu,Runyenjes,-0.4167,37.5667,false,town_centre_approx
+Embu,Siakago,-0.6000,37.6333,false,approx
+Garissa,Garissa Soko Mugdi,-0.4536,39.6461,true,town_centre
+Homa Bay,Homabay Soko Mjinga,-0.5273,34.4571,true,town_centre
+Homa Bay,Mbita,-0.4333,34.2000,false,town_centre_approx
+Homa Bay,Ndhiwa,-0.7333,34.3667,false,approx
+Homa Bay,Oyugis,-0.5000,34.7333,false,town_centre_approx
+Isiolo,Isiolo Fresh Produce,0.3546,37.5822,true,town_centre
+Kajiado,Ilbissil Livestock,-1.9833,36.9833,false,approx
+Kajiado,Illbissil Food,-1.9833,36.9833,false,approx
+Kajiado,Kajiado,-1.8524,36.7769,true,town_centre
+Kajiado,Kimana Crops,-2.8000,37.5333,false,town_centre_approx
+Kajiado,Kiserian crops,-1.4167,36.6833,false,town_centre_approx
+Kajiado,Kitengela,-1.4667,36.9500,true,town_centre
+Kajiado,Loitoktok,-2.9333,37.5167,true,town_centre
+Kajiado,Namanga,-2.5460,36.7920,true,border_town
+Kajiado,Ngong,-1.3667,36.6500,true,town_centre
+Kakamega,Butere Livestock,0.2000,34.4833,false,approx
+Kakamega,Kakamega Town,0.2827,34.7519,true,town_centre
+Kakamega,Khayega,0.2333,34.7333,false,approx
+Kakamega,Kipkaren,0.3167,34.9667,false,approx
+Kakamega,Lubao Livestock,0.2833,34.7500,false,approx
+Kakamega,Mumias,0.3333,34.4833,true,town_centre
+Kakamega,Musoli,0.2000,34.6167,false,approx
+Kakamega,Sabatia,0.1000,34.7500,false,approx
+Kericho,Chepseon,-0.3167,35.4667,false,approx
+Kericho,Kapkatet,-0.5000,35.1500,false,approx
+Kericho,Kericho Town,-0.3689,35.2861,true,town_centre
+Kericho,Kipsitet,-0.2500,35.1167,false,approx
+Kericho,Sondu- Kericho,-0.4000,35.0167,false,approx
+Kiambu,Jamhuri,-1.1714,36.8356,false,county_town_fallback
+Kiambu,Wangige,-1.2167,36.7167,false,town_centre_approx
+Kilifi,Charo wa Mae,-3.6305,39.8499,false,county_town_fallback
+Kilifi,Gongoni,-3.0333,40.1500,false,approx
+Kilifi,Malindi Old,-3.2175,40.1191,true,town_centre
+Kilifi,Mariakani,-3.8500,39.4667,true,town_centre
+Kilifi,Mtwapa,-3.9333,39.7500,true,town_centre
+Kirinyaga,Kagio,-0.6667,37.2000,false,town_centre_approx
+Kirinyaga,Kerugoya,-0.4989,37.2803,true,town_centre
+Kirinyaga,Kutus,-0.5500,37.2833,false,town_centre_approx
+Kirinyaga,Makutano Kirinyaga,-0.6667,37.3000,false,approx
+Kirinyaga,Ngurubani,-0.6833,37.3667,true,mwea_town
+Kisii,Daraja Mbili,-0.6817,34.7680,true,kisii_town
+Kisii,Keumbu,-0.7000,34.8167,false,approx
+Kisii,Nyakoe,-0.6500,34.8000,false,approx
+Kisii,Nyangusu,-0.8333,34.7500,false,approx
+Kisii,Suneka,-0.7000,34.6500,false,approx
+Kisumu,Ahero,-0.1667,34.9167,true,town_centre
+Kisumu,Holo,0.0333,34.5333,false,approx
+Kisumu,Katito,-0.2500,34.9833,false,approx
+Kisumu,Kibuye,-0.1000,34.7500,true,kisumu_kibuye_market
+Kisumu,Kisumu (Kondele),-0.0833,34.7667,true,kondele
+Kisumu,Muhoroni,-0.1500,35.2000,false,town_centre_approx
+Kitui,Kabati Kitui,-1.2333,37.9667,false,approx
+Kitui,Kalundu,-1.3667,38.0167,false,kitui_town_market
+Kitui,Kisasi,-1.3167,37.9333,false,approx
+Kitui,Kitui,-1.3667,38.0106,true,town_centre
+Kitui,Mwingi Town,-0.9333,38.0667,true,town_centre
+Kwale,Diani,-4.2833,39.5833,true,town_centre
+Kwale,Kinango,-4.1333,39.3167,false,approx
+Kwale,Lungalunga,-4.5500,39.1167,false,town_centre_approx
+Laikipia,Nanyuki Open Air,0.0167,37.0731,true,town_centre
+Laikipia,Nyahururu Municipal,0.0361,36.3639,true,town_centre
+Lamu,Mpeketoni,-2.3333,40.6833,false,town_centre_approx
+Machakos,Athi River Open air,-1.4500,36.9833,true,town_centre
+Machakos,Machakos Main,-1.5177,37.2634,true,town_centre
+Machakos,Masii Crops,-1.4500,37.4500,false,approx
+Machakos,Tala Centre,-1.1000,37.3500,false,approx
+Makueni,Emali,-2.0833,37.4500,true,town_centre
+Makueni,Kasikeu,-1.9333,37.5333,false,approx
+Makueni,Kathonzweni,-1.9333,37.6167,false,approx
+Mandera,Elwak,2.8000,40.9333,false,town_centre_approx
+Mandera,Rhamu,3.9333,41.2167,false,approx
+Meru,Gakoromone,0.0500,37.6500,true,meru_town_main_market
+Meru,Kangeta,0.1667,37.8333,false,approx
+Meru,Maua,0.2333,37.9333,true,town_centre
+Meru,Nkubu,-0.0667,37.6500,true,town_centre
+Migori,Awendo,-0.9167,34.5333,false,town_centre_approx
+Migori,Isebania,-1.2333,34.4833,true,border_town
+Migori,Mabera,-1.1500,34.5333,false,approx
+Migori,Marindi,-0.9333,34.4500,false,approx
+Migori,Rongo,-0.7500,34.6000,true,town_centre
+Migori,Wath Ong'er,-1.0634,34.4731,true,migori_town_market
+Mombasa,Kongowea,-4.0300,39.6833,true,kongowea_market
+Mombasa,Makupa Majengo,-4.0500,39.6667,true,makupa
+Mombasa,Marikiti,-4.0600,39.6667,true,mombasa_marikiti
+Mombasa,Shika Adabu,-4.0833,39.6333,false,approx
+Murang'a,Kangari,-0.7833,36.8833,false,approx
+Murang'a,Kirwara,-1.0000,36.9333,false,approx
+Murang'a,Kiria-ini,-0.6500,36.9167,false,approx
+Murang'a,Mukuyu,-0.7167,37.1500,true,muranga_town_market
+Nairobi,Gikomba,-1.2833,36.8360,true,gikomba_market
+Nairobi,Kangemi,-1.2667,36.7500,true,kangemi_market
+Nairobi,Kawangware,-1.2833,36.7333,true,kawangware_market
+Nairobi,Nairobi Wakulima,-1.2900,36.8300,true,wakulima_marikiti
+Nairobi,Nyamakima,-1.2833,36.8300,true,nyamakima
+Nakuru,Bahati,-0.1833,36.1500,false,approx
+Nakuru,Molo,-0.2489,35.7319,true,town_centre
+Nakuru,Naivasha,-0.7167,36.4333,true,town_centre
+Nakuru,Nakuru Top,-0.3031,36.0800,false,nakuru_town
+Nakuru,Nakuru Wakulima,-0.2833,36.0667,true,nakuru_wakulima_market
+Nakuru,Njoro,-0.3333,35.9333,true,town_centre
+Nandi,Chepterit Market - Nandi,0.1667,35.1333,false,approx
+Nandi,Kabiyet,0.4167,35.1000,false,approx
+Nandi,Kapsabet,0.2000,35.1000,true,town_centre
+Nandi,Serem - Nandi,0.1000,34.9333,false,approx
+Narok,Kilgoris,-1.0000,34.8833,true,town_centre
+Narok,Ololulung'a,-1.0500,35.6500,false,approx
+Nyamira,Ikonge,-0.6333,34.9833,false,approx
+Nyamira,Kebirigo,-0.6500,34.9333,false,approx
+Nyamira,Keroka,-0.7833,34.9500,true,town_centre
+Nyamira,Miruka,-0.6000,34.8833,false,approx
+Nyandarua,Engineer,-0.6167,36.5667,true,town_centre
+Nyandarua,Kasuku,-0.3500,36.4667,false,approx
+Nyandarua,Mairo-inya,-0.2333,36.4667,false,approx
+Nyandarua,Ol-Kalou,-0.2740,36.3780,true,town_centre
+Nyandarua,Soko mpya,-0.6333,36.5833,false,approx_njabini_area
+Nyeri,Chaka,-0.3000,37.0333,false,approx
+Nyeri,Gakindu,-0.4000,37.0333,false,approx
+Nyeri,Karatina,-0.4833,37.1333,true,karatina_market
+Nyeri,Nyeri open air,-0.4169,36.9514,true,town_centre
+Nyeri,Othaya,-0.5500,36.9333,false,town_centre_approx
+Samburu,Maralal livestock,1.0958,36.6989,true,town_centre
+Siaya,Akala,0.0500,34.4667,false,approx
+Siaya,Aram,0.1500,34.3167,false,approx
+Siaya,Bondo,0.2333,34.2667,true,town_centre
+Siaya,Siaya,0.0607,34.2881,true,town_centre
+Siaya,Ugunja,0.1833,34.3167,false,town_centre_approx
+Taita Taveta,Mwatate,-3.5000,38.3833,false,town_centre_approx
+Taita Taveta,Taveta,-3.4000,37.6833,true,border_town
+Taita Taveta,Taveta Retail,-3.4000,37.6833,true,border_town
+Taita Taveta,Voi Livestock,-3.3961,38.5561,true,town_centre
+Taita Taveta,Voi Retail,-3.3961,38.5561,true,town_centre
+Taita Taveta,Voi Wholesale,-3.3961,38.5561,true,town_centre
+Taita Taveta,Wundanyi,-3.4000,38.3667,false,town_centre_approx
+Tana River,Bura,-1.1000,39.9500,false,approx
+Tharaka Nithi,Chuka,-0.3333,37.6500,true,town_centre
+Tharaka Nithi,Kaanwa,-0.2833,37.7333,false,approx
+Tharaka Nithi,Kathwana,-0.1500,37.8667,false,approx
+Trans Nzoia,Bondeni,1.0167,35.0000,false,kitale_bondeni_market
+Trans Nzoia,Kiminini - Kitale,0.9333,34.9500,false,town_centre_approx
+Trans Nzoia,Kitale Municipality,1.0157,35.0062,true,kitale_municipal_market
+Trans Nzoia,Sibanga,1.0833,34.9167,false,approx
+Trans Nzoia,Sikhendu,1.0000,34.8833,false,approx
+Trans Nzoia,Stadium - Kitale,1.0157,35.0000,false,kitale_stadium_market
+Turkana,Kakuma Modern,3.7167,34.8667,true,town_centre
+Turkana,Lodwar Fresh Produce,3.1167,35.6000,true,town_centre
+Uasin Gishu,Cheptiret - Uasin Gishu,0.3833,35.3167,false,approx
+Uasin Gishu,Eldoret Main,0.5143,35.2698,true,eldoret_municipal_market
+Uasin Gishu,Kimumu,0.5500,35.3167,false,approx
+Uasin Gishu,Langas,0.4833,35.2500,false,approx
+Uasin Gishu,Mois Bridge,0.8000,35.0500,false,town_centre_approx
+Vihiga,Cheptulu,0.1500,34.7833,false,approx
+Vihiga,Kilingili,0.0500,34.6667,false,approx
+Vihiga,Luanda,0.0833,34.5833,true,town_centre
+Vihiga,Mbale,0.0833,34.7167,true,town_centre
+Vihiga,Serem - Vihiga,0.1000,34.8000,false,approx
+Wajir,Soko Mjinga Wajir,1.7471,40.0573,true,town_centre
+West Pokot,Chepareria,1.2333,35.2000,false,approx
+West Pokot,Makutano West Pokot,1.2500,35.1167,true,town_centre
+West Pokot,Ortum,1.2000,35.3667,false,approx

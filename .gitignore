@@ -1,1 +1,13 @@
 .env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Rebuildable from data/raw + the registries; never the source of truth.
+data/kamis.db
+data/kamis.db-wal
+data/kamis.db-shm
+output/
+*.egg-info/

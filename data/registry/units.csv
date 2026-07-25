@@ -1,0 +1,25 @@
+unit_raw,canonical,kg_equivalent,basis,notes
+kg,Kg,1,mass,KAMIS default for most crops
+kilogram,Kg,1,mass,
+kgs,Kg,1,mass,
+g,Gram,0.001,mass,
+gram,Gram,0.001,mass,
+tonne,Tonne,1000,mass,
+ton,Tonne,1000,mass,
+mt,Tonne,1000,mass,metric tonne
+bag,Bag,,packaging,kg depends on commodity - see packaging.csv
+extendedbag,Extended Bag,,packaging,the >90kg bag at the centre of the potato dispute
+net,Net,,packaging,onions typically 13-15kg
+crate,Crate,,packaging,tomatoes typically 64kg
+carton,Carton,,packaging,
+basket,Basket,,packaging,
+bunch,Bunch,,packaging,bananas
+tray,Tray,,packaging,eggs - 30 pieces
+head,Head,,packaging,cabbages sold whole
+piece,Piece,,count,
+pc,Piece,,count,
+dozen,Dozen,,count,
+litre,Litre,,volume,milk priced per litre - not mass converted
+liter,Litre,,volume,
+l,Litre,,volume,
+ltr,Litre,,volume,
