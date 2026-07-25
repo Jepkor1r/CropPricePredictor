@@ -12,6 +12,19 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
+
+def configure_text_io() -> None:
+    """Keep Windows consoles from failing on generated SMS punctuation."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
+
+
+configure_text_io()
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -84,9 +97,9 @@ def main() -> None:
         skill_lookup = BT.commodity_skill_lookup(metrics)
         losers = metrics[(metrics["horizon"] == 1) & (metrics["skill_vs_naive"] >= 1.0)]
         if len(losers):
-            print("\n⚠ HONESTY CHECK: model does NOT beat naive for:",
+            print("\nWARNING: model does NOT beat naive for:",
                   ", ".join(losers["commodity"]),
-                  "— their forecasts fall back to seasonal baseline (confidence: low).")
+                  "- their forecasts fall back to seasonal baseline (confidence: low).")
 
     # ---- 3. Forecasts ------------------------------------------------------
     hr("3. FORECASTS — all series, written to data/kamis.db :: forecasts")
@@ -144,7 +157,7 @@ def main() -> None:
     for row in sms_rows:
         text = EX.fallback_template(row, args.lang) if args.no_sms else EX.sms_for(row, args.lang)
         key = f"{row['market']} / {row['commodity']}"
-        print(f"  [{key}]  ({len(text)} chars)\n  → {text}\n")
+        print(f"  [{key}]  ({len(text)} chars)\n  -> {text}\n")
         conn.execute(
             "UPDATE forecasts SET sms_text=? WHERE commodity=? AND classification=? "
             "AND market=? AND horizon_weeks=1",
@@ -163,15 +176,15 @@ def print_card(sel: pd.DataFrame, skill_lookup: dict, panel: pd.DataFrame) -> No
         (panel["commodity"] == r["commodity"]) & (panel["classification"] == r["classification"])
         & (panel["market"] == r["market"]) & panel["price"].notna()
     ])
-    print(f"\n── {r['commodity']}{cls} — {r['market']}, {r['county']} " + "─" * 20)
-    print(f"   Data through {r['as_of']} · {n_weeks} weekly obs · tier: {r['tier']}")
+    print(f"\n-- {r['commodity']}{cls} - {r['market']}, {r['county']} " + "-" * 20)
+    print(f"   Data through {r['as_of']} | {n_weeks} weekly obs | tier: {r['tier']}")
     if r["tier"] == "insufficient_data":
         stale_weeks = (pd.Timestamp(r["as_of"]) - pd.Timestamp(r["last_price_date"])).days // 7
         if stale_weeks > 8:
-            print(f"   ✗ No recent data — last report {r['last_price_date']}, "
+            print(f"   No forecast: no recent data - last report {r['last_price_date']}, "
                   f"{stale_weeks} weeks before the commodity's latest data. Too stale to forecast.")
         else:
-            print(f"   ✗ Only {n_weeks} weeks of history — not enough for a forecast.")
+            print(f"   No forecast: only {n_weeks} weeks of history - not enough for a forecast.")
         return
     print(f"   Last {r['price_type']}: {r['last_price']} {r['unit']} ({r['last_price_date']})")
     for _, f in sel.iterrows():
@@ -179,13 +192,13 @@ def print_card(sel: pd.DataFrame, skill_lookup: dict, panel: pd.DataFrame) -> No
             continue
         label = "Next week " if f["horizon_weeks"] == 1 else f"In {f['horizon_weeks']} weeks"
         print(f"   {label}: {f['p50']:.2f} {f['unit']}  "
-              f"(range {f['p10']:.2f} – {f['p90']:.2f}) · confidence: {f['confidence']}")
+              f"(range {f['p10']:.2f} - {f['p90']:.2f}) | confidence: {f['confidence']}")
     skill = skill_lookup.get(r["commodity"])
     if skill is not None and r["tier"] == "model":
         verdict = f"beats last-price by {round((1 - skill) * 100)}%" if skill < 1 else "does NOT beat last-price"
         print(f"   vs naive baseline: skill {skill} ({verdict})")
     if r["anomaly_flag"]:
-        print(f"   ⚠ {r['anomaly_note']}")
+        print(f"   Warning: {r['anomaly_note']}")
 
 
 def chart(panel: pd.DataFrame, sel: pd.DataFrame, outdir: Path) -> None:
@@ -206,7 +219,7 @@ def chart(panel: pd.DataFrame, sel: pd.DataFrame, outdir: Path) -> None:
         ax.plot(weeks, ok["p50"], "o-", color="#d97706", label="forecast P50")
         ax.axhline(r["last_price"], ls=":", color="#6b7280", lw=1, label="naive (last price)")
     cls = f" ({r['classification']})" if r["classification"] != "-" else ""
-    ax.set_title(f"{r['commodity']}{cls} — {r['market']} · data through {r['as_of']}")
+    ax.set_title(f"{r['commodity']}{cls} - {r['market']} | data through {r['as_of']}")
     ax.set_ylabel(r["unit"])
     ax.legend(fontsize=8)
     fig.autofmt_xdate()
@@ -224,7 +237,7 @@ def write_report(files: pd.DataFrame, coverage: pd.DataFrame, metrics: pd.DataFr
         files.to_markdown(index=False), "",
         "## Per-commodity coverage", "",
         coverage.to_markdown(index=False), "",
-        "## Backtest (rolling-origin, MAPE %, skill = model/naive — <1.0 beats naive)", "",
+        "## Backtest (rolling-origin, MAPE %, skill = model/naive - <1.0 beats naive)", "",
         metrics.to_markdown(index=False) if not metrics.empty else "_no series long enough_", "",
         "## Sample SMS messages", "",
     ]
@@ -238,7 +251,7 @@ def write_report(files: pd.DataFrame, coverage: pd.DataFrame, metrics: pd.DataFr
         "  `GET /forecast?commodity=&market=&classification=` (returns the forecasts row incl. `sms_text`),",
         "  `GET /history?commodity=&market=&weeks=12`.",
         "- **USSD (Africa's Talking)**: webhook receiving `sessionId, phoneNumber, text`; menu flow",
-        "  crop → county → market → forecast screen (menus built from the API); final screen is a trimmed `sms_text`.",
+        "  crop -> county -> market -> forecast screen (menus built from the API); final screen is a trimmed `sms_text`.",
         "- **SMS push**: on each ingest+forecast run, send updated `sms_text` to a `subscriptions` table",
         "  (phone, commodity, market, language) via AT `SMS.send`.",
         "- **Dashboard**: web app over the same API — coverage view from `ingest_log`, county price map,",
@@ -246,7 +259,7 @@ def write_report(files: pd.DataFrame, coverage: pd.DataFrame, metrics: pd.DataFr
         "- Also phase 2: KAMIS scraping/scheduled ingestion, unit conversion beyond /Kg, alias-table UI,",
         "  retraining schedule.",
     ]
-    (OUTPUT / "report.md").write_text("\n".join(lines))
+    (OUTPUT / "report.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 if __name__ == "__main__":

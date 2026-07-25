@@ -5,3 +5,4 @@ scikit-learn>=1.4
 matplotlib>=3.8
 anthropic>=0.40
 python-dotenv>=1.0
+tabulate

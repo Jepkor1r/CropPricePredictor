@@ -1,7 +1,10 @@
 commodity,horizon,n,mape_model,mape_naive,mape_seasonal,skill_vs_naive
-Dry Maize,1,116,7.6,10.4,10.4,0.73
-Dry Maize,2,97,7.6,7.1,10.1,1.07
-Dry Maize,4,78,9.8,11.2,11.6,0.88
-Tomatoes,1,63,27.2,23.5,43.9,1.16
-Tomatoes,2,100,31.1,30.1,39.0,1.03
-Tomatoes,4,44,21.3,25.3,48.8,0.84
+Dry Maize,1,58,10.7,16.4,14.4,0.65
+Dry Maize,2,54,10.6,9.0,13.1,1.18
+Dry Maize,4,47,10.9,13.3,14.0,0.82
+Dry Onions,1,41,7020.9,7123.0,6864.5,0.99
+Dry Onions,2,37,7499.4,7290.4,6727.5,1.03
+Dry Onions,4,22,14.6,32.4,46.5,0.45
+Tomatoes,1,66,24.9,22.1,25.1,1.13
+Tomatoes,2,41,20.3,19.8,47.9,1.03
+Tomatoes,4,51,31.4,36.4,27.5,0.86
