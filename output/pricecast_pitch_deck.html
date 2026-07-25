@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PriceCast Pitch Deck</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5e6b76;
+      --paper: #f7f5ef;
+      --panel: #ffffff;
+      --green: #0f5b43;
+      --leaf: #1c8a5c;
+      --maize: #f2b84b;
+      --tomato: #d85c27;
+      --blue: #2f6fb2;
+      --line: #d8d2c4;
+      --shadow: 0 18px 50px rgba(23, 33, 43, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 54px 70px 70px;
+      background: var(--paper);
+    }
+
+    .slide.active {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      color: var(--tomato);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: 68px;
+      line-height: 0.95;
+      letter-spacing: 0;
+      max-width: 920px;
+    }
+
+    h2 {
+      font-size: 44px;
+      line-height: 1.02;
+      letter-spacing: 0;
+      max-width: 980px;
+    }
+
+    h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .lede {
+      font-size: 25px;
+      line-height: 1.32;
+      color: var(--muted);
+      max-width: 900px;
+      margin-top: 20px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 38px;
+      align-items: center;
+      min-height: 0;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .quiet-panel {
+      background: rgba(255,255,255,0.68);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 24px;
+      font-size: 24px;
+      line-height: 1.42;
+    }
+
+    li { margin: 12px 0; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      min-height: 130px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 42px;
+      line-height: 1;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .hero {
+      background: var(--green);
+      color: white;
+    }
+
+    .hero.active {
+      grid-template-rows: 1fr;
+    }
+
+    .hero h1 {
+      color: white;
+      max-width: 780px;
+    }
+
+    .hero .lede {
+      color: rgba(255,255,255,0.82);
+      max-width: 780px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 44px;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-wall {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .chart-wall img, .chart-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: white;
+    }
+
+    .chart-frame {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .step {
+      border-top: 6px solid var(--leaf);
+      background: white;
+      border-radius: 8px;
+      padding: 18px;
+      min-height: 178px;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step b {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.34;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .tier {
+      border-radius: 8px;
+      padding: 24px;
+      min-height: 170px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .tier.model { border-top: 8px solid var(--green); }
+    .tier.fallback { border-top: 8px solid var(--maize); }
+    .tier.none { border-top: 8px solid var(--tomato); }
+
+    .tier p, .small {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .bar-table {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 86px;
+      gap: 14px;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    .bar-track {
+      height: 18px;
+      background: #ede8dc;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      background: var(--blue);
+    }
+
+    .bar.naive { background: var(--tomato); }
+
+    .sms {
+      font-size: 28px;
+      line-height: 1.25;
+      padding: 28px;
+      border-left: 8px solid var(--green);
+      background: #f0f7f3;
+      border-radius: 8px;
+      color: var(--ink);
+    }
+
+    .forecast-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .forecast-table div {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .forecast-table strong {
+      display: block;
+      color: var(--green);
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .closing {
+      background: var(--ink);
+      color: white;
+    }
+
+    .closing h2,
+    .closing .lede { color: white; }
+
+    .closing .panel {
+      box-shadow: none;
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .closing ul, .closing li { color: white; }
+
+    .nav {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+      background: rgba(247,245,239,0.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      backdrop-filter: blur(8px);
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      border-radius: 6px;
+      width: 38px;
+      height: 34px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--green); }
+
+    .counter {
+      min-width: 72px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer {
+      position: absolute;
+      left: 70px;
+      right: 70px;
+      bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(23, 33, 43, 0.48);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero .footer, .closing .footer {
+      color: rgba(255,255,255,0.6);
+    }
+
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .deck { height: auto; }
+      .slide, .slide.active {
+        position: relative;
+        min-height: 100vh;
+        display: grid;
+        padding: 34px 22px 86px;
+      }
+      h1 { font-size: 42px; }
+      h2 { font-size: 32px; }
+      .lede { font-size: 20px; }
+      .two-col, .hero-layout, .three-col, .pipeline, .stat-grid,
+      .trust-row, .forecast-table {
+        grid-template-columns: 1fr;
+      }
+      ul { font-size: 20px; }
+      .footer { left: 22px; right: 22px; }
+      .nav { position: fixed; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide hero active">
+      <div class="hero-layout">
+        <div>
+          <div class="eyebrow">Hackathon Pitch Deck</div>
+          <h1>PriceCast</h1>
+          <p class="lede">KAMIS farm price forecasts delivered as plain-language SMS for smallholder farmers in Kenya.</p>
+          <p class="lede"><strong>Farmers deserve price foresight, not market rumors.</strong></p>
+        </div>
+        <div class="chart-wall" aria-label="Forecast chart examples">
+          <img src="Dry_Maize_Ahero.png" alt="Dry maize Ahero forecast chart">
+          <img src="Dry_Onions_Nakuru_Wakulima.png" alt="Dry onions Nakuru Wakulima forecast chart">
+          <img src="Tomatoes_Nairobi_Wakulima.png" alt="Tomatoes Nairobi Wakulima forecast chart">
+          <img src="Cabbages_Kongowea.png" alt="Cabbages Kongowea forecast chart">
+        </div>
+      </div>
+      <div class="footer"><span>PriceCast</span><span>KAMIS -> Forecasts -> SMS</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Problem</div>
+        <h2>Farmers sell into fast-moving markets with slow, messy information.</h2>
+      </header>
+      <div class="two-col">
+        <ul>
+          <li>Prices shift by crop, market, and week.</li>
+          <li>KAMIS contains useful public market data, but exports are raw, capped, duplicated, and uneven.</li>
+          <li>Most farmers need low-bandwidth answers, not a dashboard login.</li>
+          <li>A confident wrong forecast can destroy trust.</li>
+        </ul>
+        <div class="panel">
+          <h3>The farmer question</h3>
+          <p class="lede">"Should I sell here this week, wait, or check another market?"</p>
+        </div>
+      </div>
+      <div class="footer"><span>Problem</span><span>02 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Solution</div>
+        <h2>PriceCast turns messy market exports into farmer-ready guidance.</h2>
+      </header>
+      <div class="three-col">
+        <div class="quiet-panel">
+          <h3>Forecast</h3>
+          <p class="small">Weekly 1, 2, and 4 week price ranges for each commodity and market.</p>
+        </div>
+        <div class="quiet-panel">
+          <h3>Trust</h3>
+          <p class="small">Confidence tiers, baseline checks, anomaly detection, and honest "not enough data" messages.</p>
+        </div>
+        <div class="quiet-panel">
+          <h3>Reach</h3>
+          <p class="small">English or Kiswahili SMS, with a Phase 2 path to USSD, API, and dashboard layers.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Solution</span><span>03 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Product Flow</div>
+        <h2>From KAMIS exports to SMS in one reproducible pipeline.</h2>
+      </header>
+      <div class="pipeline">
+        <div class="step"><b>1. Ingest</b><span>Load KAMIS Excel exports, including files with .xls names and xlsx internals.</span></div>
+        <div class="step"><b>2. Clean</b><span>Parse KES/Kg, normalize markets, dedupe overlapping exports, and log coverage.</span></div>
+        <div class="step"><b>3. Panel</b><span>Build leakage-safe weekly series by commodity, classification, and market.</span></div>
+        <div class="step"><b>4. Model</b><span>Train pooled LightGBM quantile models plus seasonal and naive baselines.</span></div>
+        <div class="step"><b>5. Explain</b><span>Use Claude for short farmer SMS; fallback templates keep the demo reliable.</span></div>
+        <div class="step"><b>6. Persist</b><span>Write observations and forecasts into SQLite for API, USSD, SMS, and dashboard use.</span></div>
+      </div>
+      <div class="footer"><span>Flow</span><span>04 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Trust Layer</div>
+        <h2>The product knows when not to forecast.</h2>
+      </header>
+      <div>
+        <div class="trust-row">
+          <div class="tier model">
+            <h3>Model</h3>
+            <p>At least 26 weekly observations, fresh data, and enough evidence for ML.</p>
+          </div>
+          <div class="tier fallback">
+            <h3>Seasonal fallback</h3>
+            <p>Some signal exists, but not enough confidence for a model-driven forecast.</p>
+          </div>
+          <div class="tier none">
+            <h3>Insufficient data</h3>
+            <p>No guess. The SMS points to the nearest covered market when possible.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="lede">Backtesting compares the model to "last known price." If the model does not beat the baseline, PriceCast demotes the forecast instead of pretending.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Trust</span><span>05 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Evidence</div>
+        <h2>The current demo has real data, real forecasts, and real backtests.</h2>
+      </header>
+      <div class="two-col">
+        <div class="stat-grid">
+          <div class="stat"><strong>10,517</strong><span>deduplicated observations</span></div>
+          <div class="stat"><strong>220</strong><span>distinct markets</span></div>
+          <div class="stat"><strong>372</strong><span>commodity-market series</span></div>
+          <div class="stat"><strong>1,116</strong><span>forecast rows across 1, 2, and 4 weeks</span></div>
+          <div class="stat"><strong>38</strong><span>one-week model-tier forecasts</span></div>
+          <div class="stat"><strong>124</strong><span>one-week seasonal fallbacks</span></div>
+        </div>
+        <div class="panel">
+          <h3>Backtest highlight: Dry Maize, 1 week</h3>
+          <div class="bar-table">
+            <div class="bar-row"><span>PriceCast</span><div class="bar-track"><div class="bar" style="width:65%"></div></div><b>10.7%</b></div>
+            <div class="bar-row"><span>Last price</span><div class="bar-track"><div class="bar naive" style="width:100%"></div></div><b>16.4%</b></div>
+          </div>
+          <p class="lede">About 35% lower error than the naive baseline.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Evidence</span><span>06 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Demo Forecast</div>
+        <h2>A market-specific forecast becomes a farmer-readable message.</h2>
+      </header>
+      <div class="two-col">
+        <div class="chart-frame">
+          <img src="Dry_Maize_Ahero.png" alt="Dry maize Ahero forecast chart">
+        </div>
+        <div>
+          <h3>Dry Maize, White Maize - Ahero, Kisumu</h3>
+          <div class="forecast-table">
+            <div><strong>55.00</strong><span class="small">KES/Kg last price</span></div>
+            <div><strong>53.01</strong><span class="small">KES/Kg next week</span></div>
+            <div><strong>50.20-58.56</strong><span class="small">forecast range</span></div>
+            <div><strong>Medium</strong><span class="small">confidence</span></div>
+          </div>
+          <div style="height:22px"></div>
+          <p class="sms">Ahero Dry Maize: now 55 KES/kg, expected about 53 KES/kg next week (50-59). Trend: falling.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Demo</span><span>07 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">AI Layer</div>
+        <h2>Claude explains the forecast; it does not invent the forecast.</h2>
+      </header>
+      <div class="two-col">
+        <ul>
+          <li>The model outputs structured numbers first.</li>
+          <li>Claude receives only validated forecast fields.</li>
+          <li>The prompt forbids invented prices, dates, and unsupported advice.</li>
+          <li>Messages are validated for length and required forecast figures.</li>
+          <li>If the API fails, deterministic templates keep the product running.</li>
+        </ul>
+        <div class="panel">
+          <h3>Design principle</h3>
+          <p class="lede">ML predicts. Claude explains. The farmer receives only the useful part.</p>
+        </div>
+      </div>
+      <div class="footer"><span>AI</span><span>08 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Go-To-Market</div>
+        <h2>Start with groups already helping farmers make market decisions.</h2>
+      </header>
+      <div class="two-col">
+        <ul>
+          <li>County agriculture offices and extension officers.</li>
+          <li>Farmer cooperatives and producer groups.</li>
+          <li>Grain, onion, tomato, and cabbage value-chain partners.</li>
+          <li>SMS and USSD access through Africa's Talking.</li>
+        </ul>
+        <div class="panel">
+          <h3>Business model options</h3>
+          <ul>
+            <li>Sponsored farmer SMS alerts.</li>
+            <li>Paid co-op and county dashboards.</li>
+            <li>Forecast API for agribusiness, insurers, and food-security partners.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Market</span><span>09 / 11</span></div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Roadmap</div>
+        <h2>The demo is already structured as the backend contract for Phase 2.</h2>
+      </header>
+      <div class="two-col">
+        <div class="panel">
+          <h3>Built now</h3>
+          <ul>
+            <li>Static KAMIS ingestion.</li>
+            <li>Backtesting and confidence tiers.</li>
+            <li>Forecast rows in SQLite.</li>
+            <li>Charts, report, and SMS text layer.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Next</h3>
+          <ul>
+            <li>Scheduled KAMIS ingestion.</li>
+            <li>Africa's Talking USSD and SMS subscriptions.</li>
+            <li>FastAPI endpoints for forecasts and history.</li>
+            <li>County/co-op dashboard and data-quality monitoring.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Roadmap</span><span>10 / 11</span></div>
+    </section>
+
+    <section class="slide closing">
+      <header>
+        <div class="eyebrow">Ask</div>
+        <h2>Help PriceCast pilot trusted price guidance with real farmers.</h2>
+      </header>
+      <div class="two-col">
+        <div class="panel">
+          <ul>
+            <li>Live or refreshed KAMIS access.</li>
+            <li>SMS credits and shortcode setup.</li>
+            <li>County or co-op pilot partners.</li>
+            <li>Extension officer feedback on language and usefulness.</li>
+            <li>Support to expand crop coverage.</li>
+          </ul>
+        </div>
+        <div>
+          <p class="lede">PriceCast helps farmers make better market decisions with data they can actually receive, understand, and trust.</p>
+        </div>
+      </div>
+      <div class="footer"><span>PriceCast</span><span>11 / 11</span></div>
+    </section>
+  </main>
+
+  <nav class="nav" aria-label="Slide navigation">
+    <button id="prev" title="Previous slide" aria-label="Previous slide">&lt;</button>
+    <div class="counter" id="counter">1 / 11</div>
+    <button id="next" title="Next slide" aria-label="Next slide">&gt;</button>
+  </nav>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    let index = 0;
+
+    function showSlide(nextIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      document.title = `PriceCast Pitch Deck - ${index + 1}/${slides.length}`;
+    }
+
+    document.getElementById("prev").addEventListener("click", () => showSlide(index - 1));
+    document.getElementById("next").addEventListener("click", () => showSlide(index + 1));
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") showSlide(index + 1);
+      if (event.key === "ArrowLeft" || event.key === "PageUp") showSlide(index - 1);
+      if (event.key === "Home") showSlide(0);
+      if (event.key === "End") showSlide(slides.length - 1);
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
