@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* Theme is driven by an explicit attribute so the toggle is deterministic;
+   an inline script in layout.tsx stamps it from localStorage or the OS. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+
+  /* Brand green for UI chrome. 600+ clears 4.5:1 on white; 300/400 on dark. */
+  --color-brand-50: #f0f9f2;
+  --color-brand-100: #dcf1e1;
+  --color-brand-200: #b8e3c4;
+  --color-brand-300: #86cf9c;
+  --color-brand-400: #5cbb70;
+  --color-brand-500: #2a8f4b;
+  --color-brand-600: #146632;
+  --color-brand-700: #0f5228;
+  --color-brand-800: #0a3d20;
+  --color-brand-900: #06301a;
+
+  --radius-card: 22px;
+  --radius-tile: 16px;
+
+  --shadow-tile: 0 1px 2px rgba(11, 11, 11, 0.04), 0 6px 20px -8px rgba(11, 11, 11, 0.1);
+  --shadow-lift: 0 2px 6px rgba(11, 11, 11, 0.05), 0 22px 50px -18px rgba(11, 11, 11, 0.2);
+}
+
+/* ── Chart + surface tokens ────────────────────────────────────────────────
+   Categorical order (green-led theme): green, blue, orange, aqua, yellow,
+   magenta, violet, red. Validated with the dataviz validator in both modes —
+   worst adjacent CVD ΔE 9.1 light / 8.4 dark (target >= 8), worst
+   normal-vision ΔE 19.6 / 19.3 (floor 15). On the LIGHT surface slots 4, 5
+   and 6 sit below 3:1, so any chart using them ships visible labels and a
+   table view. The slot order is the CVD-safety mechanism — do not reorder. */
+:root {
+  color-scheme: light;
+  --surface-1: #fcfcfb;
+  --surface-page: #f4f6f4;
+  --surface-raised: #ffffff;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --gridline: #e1e0d9;
+  --axis: #c3c2b7;
+  --hairline: rgba(11, 11, 11, 0.1);
+
+  --series-1: #008300;
+  --series-2: #2a78d6;
+  --series-3: #eb6834;
+  --series-4: #1baf7a;
+  --series-5: #eda100;
+  --series-6: #e87ba4;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+
+  /* ordinal green ramp — validated --ordinal (monotone L, light end 2.33:1) */
+  --ordinal-1: #5cbb70;
+  --ordinal-2: #2a8f4b;
+  --ordinal-3: #146632;
+
+  /* status — fixed scale, never themed, always paired with icon + label */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+  --success-text: #006300;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-1: #1a1a19;
+    --surface-page: #0d0d0d;
+    --surface-raised: #1c1d1c;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --gridline: #2c2c2a;
+    --axis: #383835;
+    --hairline: rgba(255, 255, 255, 0.1);
+    --series-1: #008300;
+    --series-2: #3987e5;
+    --series-3: #d95926;
+    --series-4: #199e70;
+    --series-5: #c98500;
+    --series-6: #d55181;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+    --ordinal-1: #8ed49b;
+    --ordinal-2: #4fb266;
+    --ordinal-3: #2a8f4b;
+    --success-text: #0ca30c;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-1: #1a1a19;
+  --surface-page: #0d0d0d;
+  --surface-raised: #1c1d1c;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --gridline: #2c2c2a;
+  --axis: #383835;
+  --hairline: rgba(255, 255, 255, 0.1);
+  --series-1: #008300;
+  --series-2: #3987e5;
+  --series-3: #d95926;
+  --series-4: #199e70;
+  --series-5: #c98500;
+  --series-6: #d55181;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+  --ordinal-1: #8ed49b;
+  --ordinal-2: #4fb266;
+  --ordinal-3: #2a8f4b;
+  --success-text: #0ca30c;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background: var(--surface-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+  }
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-900);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+@utility text-display {
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  font-weight: 600;
+}
+
+@utility text-title {
+  letter-spacing: -0.022em;
+  line-height: 1.12;
+  font-weight: 600;
+}
+
+/* Columns of figures align; large standalone numbers stay proportional. */
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility glass {
+  background: color-mix(in srgb, var(--surface-raised) 70%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+@utility hairline {
+  border: 1px solid var(--hairline);
+}
+
+@utility hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+
+@utility hairline-b {
+  border-bottom: 1px solid var(--hairline);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Recharts puts a focus ring on its wrapper; focus is managed on the marks. */
+.recharts-wrapper:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
