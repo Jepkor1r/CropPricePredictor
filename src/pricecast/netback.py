@@ -33,6 +33,10 @@ from .config import (
 )
 from .names import canonical_county, canonical_market
 
+# Above this share, hauling to the terminal market is marginal and the farmer
+# should hear that plainly rather than infer it from a thin floor number.
+MARGINAL_ROUTE_COST_SHARE = 40.0
+
 
 @dataclass(frozen=True)
 class Component:
@@ -255,6 +259,16 @@ def estimate(
         )
         floor_low = 0.0
     floor_high = max(floor_high, floor_low)
+
+    mid_share = (
+        100 * ((total_low + total_high) / 2) / wholesale_kes_per_kg
+        if wholesale_kes_per_kg else 0.0
+    )
+    if 0 < floor_low and mid_share > MARGINAL_ROUTE_COST_SHARE:
+        warnings.append(
+            f"Costs eat about {mid_share:.0f}% of the price at this market - when prices "
+            "are this low, a nearer market or holding may net you more than hauling."
+        )
 
     return NetbackEstimate(
         commodity=commodity,

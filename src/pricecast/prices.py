@@ -23,6 +23,10 @@ from .names import canonical_commodity, canonical_county, canonical_market
 
 DEFAULT_MAX_AGE_DAYS = 21
 TREND_WEEKS = 4
+# A price older than this must not become the anchor for a farm-gate floor.
+# Quoting a 15-day-old high price as "your floor" while a fresher nearby market
+# pays a third of it is worse than saying nothing.
+FRESH_FOR_ANCHOR_DAYS = 7
 
 
 @dataclass
@@ -230,8 +234,29 @@ def price_card(
     if not card.markets:
         return card
 
-    # "Best" = highest price among the nearby markets, not merely the nearest.
-    card.best = max(card.markets, key=lambda m: m.price_kes_per_kg)
+    # "Best" = highest price among nearby markets, but only among *fresh* ones.
+    # Anchoring the floor on a stale high price is the single easiest way to
+    # send a farmer into a negotiation with a number the market has moved past.
+    fresh = [m for m in card.markets if m.days_old <= FRESH_FOR_ANCHOR_DAYS]
+    if fresh:
+        card.best = max(fresh, key=lambda m: m.price_kes_per_kg)
+        ignored = [m for m in card.markets
+                   if m.days_old > FRESH_FOR_ANCHOR_DAYS
+                   and m.price_kes_per_kg > card.best.price_kes_per_kg]
+        if ignored:
+            highest = max(ignored, key=lambda m: m.price_kes_per_kg)
+            card.warnings.append(
+                f"{highest.market} last quoted {highest.price_kes_per_kg:.0f} KES/kg but that "
+                f"is {highest.days_old} days old, so the floor is based on "
+                f"{card.best.market} instead."
+            )
+    else:
+        card.best = max(card.markets, key=lambda m: m.price_kes_per_kg)
+        card.warnings.append(
+            f"Every nearby market is more than {FRESH_FOR_ANCHOR_DAYS} days stale; "
+            f"this floor is based on a {card.best.days_old}-day-old price. Treat it as "
+            "a rough guide only."
+        )
     estimate = netback.estimate(
         commodity=commodity,
         wholesale_kes_per_kg=card.best.price_kes_per_kg,

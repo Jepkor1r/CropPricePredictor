@@ -39,6 +39,10 @@ def cmd_demo(args: argparse.Namespace) -> None:
 
     # 1. ingest ---------------------------------------------------------------
     hr("1. INGEST - per-file coverage (gaps are data, not assumptions)")
+    _usable, skipped = ING.discover_exports(args.raw_dir)
+    if skipped:
+        print(f"Skipped {len(skipped)} editor lock file(s): "
+              f"{', '.join(p.name for p in skipped)}\n")
     obs, reports = ING.load_all(args.raw_dir)
     report_df = pd.DataFrame([r.to_dict() for r in reports])
     print(report_df.drop(columns=["date_min", "date_max"]).to_string(index=False))

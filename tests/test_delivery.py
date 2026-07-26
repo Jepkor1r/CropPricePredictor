@@ -263,3 +263,55 @@ def test_ussd_says_so_when_nothing_is_fresh(conn):
     response = ussd.UssdApp(conn).handle("+254700000001", "1")
     assert response.close
     assert "stale" in response.text.lower()
+
+
+def test_floor_is_never_anchored_on_a_stale_high_price(conn):
+    """Regression: a 15-day-old 35/kg must not outrank a 2-day-old 10/kg anchor.
+
+    Seen in the real Cabbages/Nyandarua card - quoting the stale high as 'your
+    floor' sends a farmer into a negotiation the market has already left.
+    """
+    today = pd.Timestamp.today().normalize()
+    stale = str((today - pd.Timedelta(days=15)).date())
+    fresh = str((today - pd.Timedelta(days=2)).date())
+    DB.upsert_observations(conn, pd.DataFrame([
+        make_observation(commodity="Cabbages", classification="-", market="Mukuyu",
+                         county="Murang'a", date=stale, wholesale_per_kg=35.0),
+        make_observation(commodity="Cabbages", classification="-", market="Kagio",
+                         county="Kirinyaga", date=fresh, wholesale_per_kg=10.0),
+    ]))
+    card = prices.price_card(conn, "Cabbages", "Nyandarua", limit=3)
+    assert card.best.market == "Kagio"
+    assert card.best.price_kes_per_kg == 10.0
+    assert any("15 days old" in w for w in card.warnings)
+
+
+def test_all_stale_markets_still_answer_but_say_so(conn):
+    today = pd.Timestamp.today().normalize()
+    stale = str((today - pd.Timedelta(days=14)).date())
+    DB.upsert_observations(conn, pd.DataFrame([
+        make_observation(commodity="Cabbages", classification="-", market="Mukuyu",
+                         county="Murang'a", date=stale, wholesale_per_kg=35.0),
+    ]))
+    card = prices.price_card(conn, "Cabbages", "Nyandarua", limit=3)
+    assert card.best.market == "Mukuyu"
+    assert any("stale" in w and "rough guide" in w for w in card.warnings)
+
+
+def test_coverage_report_separates_recent_window_from_full_span(conn):
+    """Two-era data reads as ~9% covered overall; the 52-week view is what matters."""
+    today = pd.Timestamp.today().normalize()
+    rows = [
+        make_observation(commodity="Cabbages", classification="-", date="2005-02-01",
+                         market="Kibuye", county="Kisumu")
+    ]
+    for week in range(20):
+        rows.append(make_observation(
+            commodity="Cabbages", classification="-", market="Mukuyu", county="Murang'a",
+            date=str((today - pd.Timedelta(weeks=week)).date()),
+        ))
+    DB.upsert_observations(conn, pd.DataFrame(rows))
+    report = DB.coverage_report(conn)
+    row = report[report["commodity"] == "Cabbages"].iloc[0]
+    assert row["week_coverage_pct"] < 5      # misleading whole-span number
+    assert row["recent52w_weeks"] == 20      # the decision-relevant one

@@ -286,6 +286,8 @@ def coverage_report(conn: sqlite3.Connection) -> pd.DataFrame:
     if df.empty:
         return pd.DataFrame()
     df["date"] = pd.to_datetime(df["date"])
+    today = pd.Timestamp.today().normalize()
+    recent_cutoff = today - pd.Timedelta(weeks=52)
     rows = []
     for (com, cls), g in df.groupby(["commodity", "classification"]):
         weeks = g["date"].dt.to_period("W").nunique()
@@ -296,11 +298,18 @@ def coverage_report(conn: sqlite3.Connection) -> pd.DataFrame:
              for a, b in zip(dates, dates[1:], strict=False)),
             default=0,
         )
+        # Whole-span coverage is misleading once a commodity has two eras (a
+        # 2005 extract plus a 2026 one reads as ~9% covered). What decides
+        # whether we can serve a farmer is coverage of the last 12 months.
+        recent = g[g["date"] >= recent_cutoff]
+        recent_weeks = recent["date"].dt.to_period("W").nunique()
         rows.append({
             "commodity": com, "classification": cls,
             "date_min": g["date"].min().date(), "date_max": g["date"].max().date(),
             "distinct_weeks": weeks, "span_weeks": span_weeks,
             "week_coverage_pct": round(100 * weeks / span_weeks),
+            "recent52w_weeks": recent_weeks,
+            "recent52w_pct": min(100, round(100 * recent_weeks / 52)),
             "n_markets": g["market"].nunique(), "n_counties": g["county"].nunique(),
             "largest_gap_days": largest_gap, "n_rows": len(g),
         })

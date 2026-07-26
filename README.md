@@ -11,7 +11,8 @@ spoilage come out.
 Data: KAMIS (`kamis.kilimo.go.ke`) exports, augmented with EPRA diesel prices, a
 curated market geo-registry, packaging conversions and county cess schedules.
 
-Full rationale and architecture: [`docs/SOLUTION_DESIGN.md`](docs/SOLUTION_DESIGN.md).
+- Rationale, architecture and roadmap: [`docs/SOLUTION_DESIGN.md`](docs/SOLUTION_DESIGN.md)
+- Pitch deck: [`docs/pitch_deck.md`](docs/pitch_deck.md)
 
 ## Quick start
 
@@ -30,18 +31,35 @@ uv pip install -e . --no-deps --python .venv/bin/python     # installs the `pric
 Add `--as-of per_commodity` to exercise the model against the historical
 extracts (it warns loudly; never ship it).
 
+## Coverage today
+
+| Crop | Current data | Markets | Servable |
+|---|---|---|---|
+| Dry Maize | 2024-09 → 2026-07 | 80 | yes |
+| Dry Onions | 2024-08 → 2026-07 | 91 | yes |
+| Tomatoes | 2024-09 → 2026-07 | 89 | yes |
+| Cabbages | 2024-08 → 2026-07 | 88 | yes |
+| Red Irish potato | — | — | **no export yet** |
+
+19,094 observations · 221 markets · 46 counties · 100% of observed markets
+geocoded. Historical extracts (2005–2011 tomatoes/cabbages, 2005–2008 and
+2021–2022 onions) are retained: they deepen the pooled model and backtest
+without ever being served as current prices.
+
 ## What the demo shows
 
-1. **Ingest** — per-file coverage, so gaps are visible instead of assumed away.
-2. **Plausibility screen** — KAMIS contains real typos (onions at 0.02 and
-   2,100 KES/kg against a ~50 median). Flagged, kept for audit, excluded from
-   anything a farmer sees.
-3. **Freshness gate** — staleness is measured against *today*. Crops whose
-   newest quote is from 2011 are not offered at all.
+1. **Ingest** — per-file coverage, so gaps are visible instead of assumed away;
+   editor lock files are skipped by name, real corruption fails loudly.
+2. **Plausibility screen** — KAMIS contains real typos (prices from 0.01 to
+   8,000 KES/kg on crops with 20–60 medians). 178 rows flagged, kept for audit,
+   excluded from anything a farmer sees.
+3. **Freshness gate** — staleness is measured against *today*, and 52-week
+   coverage (not whole-span) decides serviceability.
 4. **Backtest** — rolling-origin, model vs "last known price". A commodity's
    model output is suppressed unless it wins.
 5. **Price cards** — nearest markets, distances, ages, trend, and the itemised
-   farm-gate floor with a source on every line.
+   farm-gate floor with a source on every line. The floor is never anchored on
+   a price older than 7 days, and says so when it rejects a stale higher quote.
 6. **USSD session** — exactly the payloads Africa's Talking would exchange.
 7. **SMS outbox** — dry-run unless AT credentials are present.
 8. **Farm-gate reports** — offers farmers report back, versus the wholesale
@@ -92,6 +110,16 @@ data/registry/ # units, packaging, markets_geo, county_centroids,
 cap at 3000 rows — pull per-crop in contiguous, slightly overlapping date
 chunks; if a file has exactly 3000 rows the range was truncated, so halve it and
 re-export. Overlaps dedupe automatically; re-ingesting the same file is a no-op.
+
+Naming convention: `Final_<Crop>.xls` for current-era exports (add an era
+suffix when a crop has several, e.g. `Final_Onions_2024-2026.xls`) and
+`Historical_<Crop>_<years>.xls` for older ones. All four current files sit at
+the 3000-row cap, so each still has internal gaps worth back-filling.
+
+Close the workbook before running: LibreOffice/Excel leave `.~Name.xls` and
+`~$Name.xls` lock files that match a `*.xls` glob. Those are skipped and
+reported; anything else unreadable stops the run rather than silently
+shrinking your coverage.
 
 **Monthly.** Update `data/registry/fuel_prices.csv` from the EPRA gazette. It is
 the only manual input the netback engine needs.

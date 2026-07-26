@@ -120,3 +120,22 @@ def test_missing_geography_warns_and_omits_transport():
 def test_indicative_cess_is_disclosed():
     estimate = netback.estimate("Dry Maize", 50.0, "Nakuru", "Nairobi Wakulima", "Nairobi")
     assert any("indicative" in w.lower() for w in estimate.warnings)
+
+
+def test_marginal_route_is_called_out_when_costs_dominate():
+    """Real case: cabbages at 10 KES/kg, 91 km haul - costs are ~55% of the price."""
+    estimate = netback.estimate(
+        "Cabbages", wholesale_kes_per_kg=10.0, origin_county="Nyandarua",
+        market="Kagio", market_county="Kirinyaga",
+    )
+    assert estimate.floor_low > 0
+    assert estimate.share_of_wholesale > netback.MARGINAL_ROUTE_COST_SHARE
+    assert any("nearer market or holding" in w for w in estimate.warnings)
+
+
+def test_healthy_route_gets_no_marginal_warning():
+    estimate = netback.estimate(
+        "Dry Maize", wholesale_kes_per_kg=50.0, origin_county="Nakuru",
+        market="Nairobi Wakulima", market_county="Nairobi",
+    )
+    assert not any("nearer market or holding" in w for w in estimate.warnings)

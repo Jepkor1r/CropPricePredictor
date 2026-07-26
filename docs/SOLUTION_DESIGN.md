@@ -71,16 +71,21 @@ precomputed `sms_text`.
 
 Ranked by feasibility (does KAMIS actually report it now?) × broker pain.
 
-| # | Crop | Farm-side counties | Terminal markets | Why |
+| # | Crop | Farm-side counties | Terminal markets | Status |
 |---|---|---|---|---|
-| 1 | Dry Maize | Uasin Gishu, Trans Nzoia | Eldoret, Kitale, Nairobi | Only crop with current data in-repo (2024-09 → 2026-07, 80 markets) |
-| 2 | Red Irish potato | Nyandarua, Nakuru | Nairobi Wakulima | Extended-bag exploitation is the flagship national issue; registry already encodes 50 kg vs 110 kg |
-| 3 | Dry Onions | Kajiado, Bungoma | Nairobi, Nakuru Wakulima | 198 markets in-repo; Tegemeo TR31 gives a netback calibration benchmark |
-| 4 | Tomatoes | Kirinyaga, Kajiado | Nairobi Wakulima | Perishability makes price info urgent; showcases the honest fallback |
-| 5 | Cabbages | Nyandarua, Meru | Nairobi Wakulima, Kongowea | Strong Nyandarua→Nairobi corridor story |
+| 1 | Dry Maize | Uasin Gishu, Trans Nzoia | Eldoret, Kitale, Nairobi | **Live** — 2024-09 → 2026-07, 80 markets |
+| 2 | Red Irish potato | Nyandarua, Nakuru | Nairobi Wakulima | **Blocked — no export yet.** Extended-bag exploitation is the flagship national issue; the registry already encodes 50 kg vs 110 kg, so it goes live the day the data lands |
+| 3 | Dry Onions | Kajiado, Bungoma | Nairobi, Nakuru Wakulima | **Live** — 2024-08 → 2026-07, 91 markets (+216 across history); Tegemeo TR31 gives a netback calibration benchmark |
+| 4 | Tomatoes | Kirinyaga, Kajiado | Nairobi Wakulima | **Live** — 2024-09 → 2026-07, 89 markets |
+| 5 | Cabbages | Nyandarua, Meru | Nairobi Wakulima, Kongowea | **Live** — 2024-08 → 2026-07, 88 markets |
 
-Crops 2–5 need fresh exports; only maize is currently servable, and the system
-says so out loud rather than quoting 2011 prices.
+Four of the five pilot crops are servable today. Red Irish potato is the one
+outstanding data pull; the code path needs no changes for it.
+
+Each current-era export hit the KAMIS 3000-row cap, so each has internal date
+gaps. The per-file coverage report shows exactly where, and the 52-week
+coverage column (rather than whole-span coverage, which reads ~9% once a
+commodity has both a 2005 and a 2026 extract) is what governs serviceability.
 
 ---
 
@@ -91,7 +96,7 @@ says so out loud rather than quoting 2011 prices.
 | Data | Source | Status |
 |---|---|---|
 | Daily KAMIS prices | kamis.kilimo.go.ke | Manual exports today; scraper is the single highest-value next step |
-| Market geo-registry | OSM + manual curation | **Built** — 182/217 observed markets (83.9%) have coordinates |
+| Market geo-registry | OSM + manual curation | **Built** — 221/221 observed markets (100%) have coordinates |
 | Packaging → kg table | KAMIS/AFA conventions | **Built** — `registry/packaging.csv` |
 
 **Tier 1 — high value, easy**
@@ -162,11 +167,21 @@ These are deliberate product features, not caveats:
 - **Freshness gate.** Staleness is measured against wall-clock today. Crops
   whose newest quote is from 2011 are not listed in the USSD menu at all —
   offering them would dead-end the farmer after they had spent airtime.
-- **Plausibility screen.** KAMIS contains real typos: Dry Onions at 0.02 KES/kg
-  (Gakoromone) and 2,100 KES/kg (Sibanga) against a ~50 median. 87 of 13,581
-  rows are flagged. They stay in the database with a reason and are excluded
-  from prices and models. This alone took the onion backtest from a nonsense
-  7019% MAPE to 14.9%.
+- **Plausibility screen.** KAMIS contains real typos: prices from 0.01 to
+  8,000 KES/kg on crops whose medians are 20–60. 178 of 19,094 rows are
+  flagged across all four crops. They stay in the database with a reason and
+  are excluded from prices and models. This alone took the onion backtest from
+  a nonsense 7019% MAPE to 11.7%.
+- **Fresh-anchor rule.** The farm-gate floor is never anchored on a price older
+  than 7 days, even if that stale price is the highest nearby. Observed live:
+  Cabbages/Nyandarua would otherwise have anchored on Mukuyu at 35 KES/kg
+  (15 days old) while Kagio, fresher, was paying 10 — sending a farmer into a
+  negotiation the market had already left. The card names the market it
+  rejected and why.
+- **Marginal-route warning.** When deductions exceed ~40% of the wholesale
+  price, the card says so outright ("costs eat about 56% of the price at this
+  market — a nearer market or holding may net you more than hauling") instead
+  of leaving the farmer to infer it from a thin floor number.
 - **Skill gate.** A commodity's model output is suppressed entirely unless it
   beat naive at h=1, and the suppressed series are re-forecast with the fallback
   so the label and the numbers always agree.
@@ -191,7 +206,10 @@ These are deliberate product features, not caveats:
 | Staleness measured per-commodity | A 2011 extract looked "fresh" and was forecast as current | Wall-clock gate, `per_commodity` is opt-in and warns |
 | Forecast rows overwritten on re-run | No accuracy audit possible | `as_of` in the primary key |
 | No plausibility screening | 0.02 KES/kg onions served as real prices | `quality.py` |
-| No tests, no packaging | Parser regressions silent | 102 tests, ruff clean, `pyproject.toml` |
+| Editor lock files crash ingest | `.~Name.xls` matches a `*.xls` glob and aborts the run; one is committed on `main` | `discover_exports()` skips `.`/`~$` prefixes and reports them; genuine corruption still fails loudly |
+| Floor anchored on the highest nearby price regardless of age | A 15-day-old high beat a fresh low, distorting the negotiating floor | Fresh-anchor rule (7 days) + named rejection warning |
+| Whole-span coverage misleading across eras | Cabbages read as "9% covered" when it holds a 2005 and a 2026 extract | 52-week coverage column drives serviceability |
+| No tests, no packaging | Parser regressions silent | 115 tests, ruff clean, `pyproject.toml` |
 
 ---
 

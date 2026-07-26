@@ -37,6 +37,12 @@ EXPECTED_COLUMNS = [
 ]
 MISSING = {"-", "", "n/a", "na", "null", "nan"}
 
+# LibreOffice writes '.~Name.xls' and Excel writes '~$Name.xls' beside an open
+# workbook. Both match a '*.xls' glob and neither is a spreadsheet, so feeding
+# one to openpyxl aborts the whole ingest. One is committed on the main branch
+# (`data/raw/.~Final_Maize.xls`), so this is a live hazard, not a hypothetical.
+TEMP_FILE_PREFIXES = (".", "~$")
+
 KEY_COLS = ["commodity", "classification", "grade", "sex", "market", "county", "date"]
 
 
@@ -228,6 +234,24 @@ def alias_candidates(df: pd.DataFrame) -> list[tuple[str, str, str]]:
     return pairs
 
 
+def discover_exports(raw_dir: Path) -> tuple[list[Path], list[Path]]:
+    """Split a raw directory into (loadable exports, skipped editor lock files).
+
+    Returned rather than printed so the caller decides how to report it and the
+    library stays free of side effects.
+    """
+    candidates = sorted(
+        set(Path(raw_dir).glob("*.xls")) | set(Path(raw_dir).glob("*.xlsx"))
+    )
+    usable, skipped = [], []
+    for path in candidates:
+        if path.name.startswith(TEMP_FILE_PREFIXES):
+            skipped.append(path)
+        else:
+            usable.append(path)
+    return usable, skipped
+
+
 def load_all(
     raw_dir: Path, aliases_path: Path | None = ALIASES_PATH, screen: bool = True
 ) -> tuple[pd.DataFrame, list[FileReport]]:
@@ -235,14 +259,25 @@ def load_all(
 
     Screening runs after concatenation on purpose: a single small export does
     not contain enough of a commodity to establish what "typical" means.
+
+    Editor lock files are skipped by name. Anything else that fails to parse
+    raises: silently skipping a file that was meant to be data is how coverage
+    gaps get mistaken for market gaps.
     """
     aliases = load_aliases(aliases_path)
     frames, reports = [], []
-    files = sorted(list(Path(raw_dir).glob("*.xls")) + list(Path(raw_dir).glob("*.xlsx")))
+    files, _skipped = discover_exports(raw_dir)
     if not files:
-        raise FileNotFoundError(f"no .xls/.xlsx files in {raw_dir}")
+        raise FileNotFoundError(f"no readable .xls/.xlsx files in {raw_dir}")
     for path in files:
-        agg, report = load_export(path, aliases)
+        try:
+            agg, report = load_export(path, aliases)
+        except Exception as exc:
+            raise RuntimeError(
+                f"failed to read {path.name}: {exc}. If this is an editor lock file or "
+                "a partial download, remove it from data/raw/; otherwise re-export it "
+                "from KAMIS."
+            ) from exc
         frames.append(agg)
         reports.append(report)
     combined = pd.concat(frames, ignore_index=True)
