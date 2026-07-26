@@ -2,6 +2,8 @@
 
 > **Machine Learning-powered weekly crop price forecasting and plain-language SMS advisories for smallholder farmers in Kenya.**
 
+🌐 **Live Application**: [https://pricecast-nine.vercel.app/](https://pricecast-nine.vercel.app/)
+
 ---
 
 ## 📌 Overview
